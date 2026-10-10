@@ -1,0 +1,63 @@
+! ===== R1 (Cisco 2911) - Lab 11 baseline =====
+! Paste at the Router> prompt in the CLI tab
+enable
+configure terminal
+hostname R1
+no ip domain-lookup
+
+! Router-on-a-stick: physical port + one subinterface per VLAN
+interface gig0/0
+ no shutdown
+interface gig0/0.10
+ encapsulation dot1Q 10
+ ip address 192.168.10.1 255.255.255.0
+ ip nat inside
+interface gig0/0.20
+ encapsulation dot1Q 20
+ ip address 192.168.20.1 255.255.255.0
+ ip nat inside
+interface gig0/0.30
+ encapsulation dot1Q 30
+ ip address 192.168.30.1 255.255.255.0
+ ip nat inside
+
+! Link to ISP (outside)
+interface gig0/1
+ ip address 203.0.113.2 255.255.255.252
+ ip nat outside
+ no shutdown
+exit
+
+! Default route to ISP
+ip route 0.0.0.0 0.0.0.0 203.0.113.1
+
+! DHCP for Sales and HR (servers use static addresses)
+ip dhcp excluded-address 192.168.10.1 192.168.10.50
+ip dhcp excluded-address 192.168.20.1 192.168.20.50
+ip dhcp pool SALES
+ network 192.168.10.0 255.255.255.0
+ default-router 192.168.10.1
+ dns-server 8.8.8.8
+ip dhcp pool HR
+ network 192.168.20.0 255.255.255.0
+ default-router 192.168.20.1
+ dns-server 8.8.8.8
+
+! NAT/PAT: only Sales and HR are translated, not the server VLAN
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+ip nat inside source list 1 interface gig0/1 overload
+
+! Logging to LogServer
+service timestamps log datetime msec
+logging host 192.168.30.10
+
+! Policy: Sales must not reach HR (inbound on the Sales subinterface)
+ip access-list extended SALES-TO-HR
+ 10 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+ 20 permit ip any any
+exit
+interface gig0/0.10
+ ip access-group SALES-TO-HR in
+end
+write memory

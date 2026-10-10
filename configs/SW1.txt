@@ -1,0 +1,49 @@
+! ===== SW1 (Cisco 2960) - Lab 11 baseline =====
+! Paste at the Switch> prompt in the CLI tab
+enable
+configure terminal
+hostname SW1
+no ip domain-lookup
+
+! VLANs
+vlan 10
+ name SALES
+vlan 20
+ name HR
+vlan 30
+ name SERVERS
+exit
+
+! Access ports
+interface range fa0/1 - 2
+ switchport mode access
+ switchport access vlan 10
+interface fa0/3
+ switchport mode access
+ switchport access vlan 20
+interface fa0/4
+ switchport mode access
+ switchport access vlan 30
+
+! Port security on the three PC ports
+interface range fa0/1 - 3
+ switchport port-security
+ switchport port-security maximum 1
+ switchport port-security mac-address sticky
+ switchport port-security violation shutdown
+
+! Trunk to R1
+interface gig0/1
+ switchport mode trunk
+
+! Management address on the server VLAN (needed to send syslog)
+interface vlan 30
+ ip address 192.168.30.2 255.255.255.0
+ no shutdown
+exit
+
+! Logging to LogServer
+service timestamps log datetime msec
+logging host 192.168.30.10
+end
+write memory
