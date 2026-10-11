@@ -16,11 +16,7 @@ SOC analysts read alerts and logs that come from networks. To judge an alert, yo
 
 ![Topology](topology/topology.png)
 
-```
-SALES  PC1, PC2 --\
-HR     PC3 ---------- SW1 ==trunk== R1 ==== ISP ---- Internet server
-SERVERS LogServer -/   (VLANs 10/20/30)   (NAT)
-```
+
 
 | Device | Role |
 |---|---|
