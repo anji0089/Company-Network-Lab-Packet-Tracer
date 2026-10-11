@@ -1,0 +1,20 @@
+! ISP - trimmed running configuration
+! Source: show running-config on ISP (Cisco Packet Tracer, 2911)
+! Removed: prompt lines, a failed command, the device serial/licence line, unused
+!          interfaces, and default settings. Nothing functional was changed.
+! Note: the ISP has no routes to the private 192.168.x.x networks, by design.
+!       Replies only reach the company because R1 translates (NAT) to 203.0.113.2.
+!
+version 15.1
+!
+hostname ISP
+!
+no ip domain-lookup
+!
+interface GigabitEthernet0/0
+ ip address 198.51.100.1 255.255.255.0
+!
+interface GigabitEthernet0/1
+ ip address 203.0.113.1 255.255.255.252
+!
+end

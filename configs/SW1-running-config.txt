@@ -1,0 +1,53 @@
+! SW1 - trimmed running configuration
+! Source: show running-config on SW1 (Cisco Packet Tracer, 2960)
+! Removed: prompt and byte-count lines, unused default interfaces (Fa0/5-24, Gi0/2),
+!          and default settings. Nothing functional was changed.
+! Note: the VLAN names (SALES, HR, SERVERS) live in the VLAN database and do not
+!       appear in running-config. See verification/01-show-vlan-brief.png
+!
+version 15.0
+service timestamps log datetime msec
+!
+hostname SW1
+!
+no ip domain-lookup
+!
+interface FastEthernet0/1
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 00E0.A3CE.C009
+!
+interface FastEthernet0/2
+ switchport access vlan 10
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 0001.C968.9721
+!
+interface FastEthernet0/3
+ switchport access vlan 20
+ switchport mode access
+ switchport port-security
+ switchport port-security mac-address sticky
+ switchport port-security mac-address sticky 000D.BDA9.E2AB
+!
+interface FastEthernet0/4
+ switchport access vlan 30
+ switchport mode access
+!
+interface GigabitEthernet0/1
+ switchport trunk allowed vlan 10,20,30
+ switchport mode trunk
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan30
+ ip address 192.168.30.2 255.255.255.0
+!
+logging 192.168.30.10
+!
+end
