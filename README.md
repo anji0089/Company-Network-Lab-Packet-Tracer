@@ -4,7 +4,7 @@ A simulated small-office network built in Cisco Packet Tracer. It combines VLAN 
 
 > **Scope:** this is a simulation in Cisco Packet Tracer, not production equipment. Some behaviour differs from real devices, and I note one such difference below.
 
-**Author:** Anji Gajula · cybersecurity graduate (B.Tech) · [LinkedIn](#) <!-- www.linkedin.com/in/anji-gajula-6b8712292 -->
+**Author:** Anji Gajula · cybersecurity graduate (B.Tech) · [LinkedIn](#) <!--https://www.linkedin.com/in/anji-gajula-6b8712292/ -->
 
 ---
 
