@@ -109,8 +109,8 @@ troubleshooting/  troubleshooting.md
 ## How to run it
 
 1. Install Cisco Packet Tracer (free with a Cisco Networking Academy account).
-2. Open `topology/lab11-final.pkt`.
-3. Compare each device with the files in `configs/`.
+2. Open [`topology/lab11-final.pkt`](topology/lab11-final.pkt) (GitHub can't preview it, so use the download button on its page).
+3. Compare each device with the files in [`configs/`](configs/).
 
 ## What I learned
 
